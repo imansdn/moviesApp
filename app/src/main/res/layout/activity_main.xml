@@ -16,17 +16,19 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:src="@mipmap/ic_launcher"
-            android:layout_margin="@dimen/margin_5"/>
+            android:layout_margin="@dimen/margin_5"
+            android:contentDescription="@string/todo" />
 
         <TextView
             android:id="@+id/txt_id"
             android:layout_toRightOf="@+id/img_poster"
+            android:layout_toEndOf="@+id/img_poster"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/txt_id"
             android:layout_margin="@dimen/margin_5"
             android:padding="@dimen/padding_5"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txt_title"

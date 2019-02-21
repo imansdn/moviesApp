@@ -26,6 +26,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    // my repo:
     annotationProcessor "com.jakewharton:butterknife-compiler:9.0.0-rc1"
     implementation "android.arch.persistence.room:runtime:1.1.1"
     annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
@@ -35,4 +37,5 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+    implementation 'com.android.support:cardview-v7:28.0.0'
 }
