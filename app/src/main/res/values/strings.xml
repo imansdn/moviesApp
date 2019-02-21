@@ -4,4 +4,5 @@
     <string name="txt_id">ID</string>
     <string name="txt_year">Year</string>
     <string name="txt_country">Country</string>
+    <string name="txt_imdb_rating">Imdb</string>
 </resources>
