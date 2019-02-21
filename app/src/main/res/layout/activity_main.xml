@@ -14,7 +14,7 @@
         android:padding="@dimen/padding_10">
 
         <RelativeLayout
-            android:id="@+id/lyt_user"
+            android:id="@+id/lyt_movies"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:context=".api.ShowUserActivity">
