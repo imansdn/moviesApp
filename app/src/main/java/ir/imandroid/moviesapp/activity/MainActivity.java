@@ -30,6 +30,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
+    @BindView(R.id.img_poster)
+    ImageView img_poster;
     @BindView(R.id.lyt_movies)
     RelativeLayout lyt_movies;
     @BindView(R.id.txt_id)
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
                     TextView textView = new TextView(MainActivity.this);
                     ImageView imageView = new ImageView(MainActivity.this);
 
+                    Picasso.with(MainActivity.this).load(movie.getPoster()).into(((ImageView) findViewById(R.id.img_poster)));
                     txt_id.setText(String.valueOf(movie.getId()));
                     txt_title.setText(movie.getTitle());
 
