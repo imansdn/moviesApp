@@ -50,7 +50,8 @@
                 android:text="@string/txt_title"
                 android:layout_margin="@dimen/margin_5"
                 android:padding="@dimen/padding_5"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:ellipsize="marquee"/>
 
             <TextView
                 android:id="@+id/txt_year"
@@ -65,8 +66,9 @@
 
             <TextView
                 android:id="@+id/txt_country"
-                android:layout_toRightOf="@+id/txt_year"
-                android:layout_toEndOf="@+id/txt_year"
+                android:layout_below="@+id/txt_id"
+                android:layout_toRightOf="@+id/img_poster"
+                android:layout_toEndOf="@+id/img_poster"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/txt_country"
@@ -76,6 +78,7 @@
 
             <TextView
                 android:id="@+id/txt_imdb_rating"
+                android:layout_below="@+id/txt_title"
                 android:layout_toRightOf="@+id/txt_country"
                 android:layout_toEndOf="@+id/txt_country"
                 android:layout_width="wrap_content"
@@ -87,15 +90,16 @@
 
             <TextView
                 android:id="@+id/txt_genres"
-                android:layout_below="@+id/txt_id"
-                android:layout_toRightOf="@+id/img_poster"
-                android:layout_toEndOf="@+id/img_poster"
+                android:layout_below="@+id/txt_year"
+                android:layout_toRightOf="@+id/txt_imdb_rating"
+                android:layout_toEndOf="@+id/txt_imdb_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/txt_genres"
                 android:layout_margin="@dimen/margin_5"
                 android:padding="@dimen/padding_5"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:ellipsize="marquee"/>
 
         </RelativeLayout>
 
