@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     TextView txt_country;
     @BindView(R.id.txt_imdb_rating)
     TextView txt_imdb_rating;
+    @BindView(R.id.txt_genres)
+    TextView txt_genres;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +69,13 @@ public class MainActivity extends AppCompatActivity {
                     txt_year.setText(movie.getYear());
                     txt_country.setText(movie.getCountry());
                     txt_imdb_rating.setText(movie.getImdbRating());
-
+                    for (int i=0; i<movie.getGenres().size(); i++) {
+                        if (movie.getGenres().size()>1){
+                            txt_genres.setText(movie.getGenres()+",");
+                        }else {
+                            txt_genres.setText(movie.getGenres()+"");
+                        }
+                    }
 
                 }
             }
