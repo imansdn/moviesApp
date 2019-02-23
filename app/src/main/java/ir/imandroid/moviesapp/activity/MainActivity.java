@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     TextView txt_year;
     @BindView(R.id.txt_country)
     TextView txt_country;
+    @BindView(R.id.txt_imdb_rating)
+    TextView txt_imdb_rating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     txt_title.setText(movie.getTitle());
                     txt_year.setText(movie.getYear());
                     txt_country.setText(movie.getCountry());
+                    txt_imdb_rating.setText(movie.getImdbRating());
 
 
                 }
