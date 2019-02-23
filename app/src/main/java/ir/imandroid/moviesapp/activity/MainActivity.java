@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     TextView txt_id;
     @BindView(R.id.txt_title)
     TextView txt_title;
+    @BindView(R.id.txt_year)
+    TextView txt_year;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
                     Picasso.with(MainActivity.this).load(movie.getPoster()).into(((ImageView) findViewById(R.id.img_poster)));
                     txt_id.setText(String.valueOf(movie.getId()));
                     txt_title.setText(movie.getTitle());
+                    txt_year.setText(movie.getYear());
 
 
                 }
