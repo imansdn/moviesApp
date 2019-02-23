@@ -3,6 +3,7 @@ package ir.imandroid.moviesapp.activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -15,8 +16,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
-    @BindView(R.id.lyt_user)
-    LinearLayout lytUser;
+    @BindView(R.id.lyt_movies)
+    RelativeLayout lyt_movies;
+    @BindView(R.id.txt_id)
+    TextView txt_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
                 GetMovies getMovies = response.body();
                 for (GetMovies.Movie movie :getMovies.getMovies() ){
                     TextView textView = new TextView(MainActivity.this);
-                    textView.setText(movie.getTitle());
-                    lytUser.addView(textView);
+                    txt_id.setText(movie.getTitle());
+//                    lyt_movies.addView(textView);
 
 
                 }

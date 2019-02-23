@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">MoviesApp</string>
+    <string name="txt_title">Title</string>
+    <string name="txt_id">ID</string>
+    <string name="txt_year">Year</string>
+    <string name="txt_country">Country</string>
+    <string name="txt_imdb_rating">Imdb</string>
+    <string name="txt_genres">Genres</string>
+    <string name="todo">Movie poster</string>
 </resources>
