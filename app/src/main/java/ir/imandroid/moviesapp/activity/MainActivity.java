@@ -4,6 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,11 +21,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ir.imandroid.moviesapp.G;
 import ir.imandroid.moviesapp.R;
+import ir.imandroid.moviesapp.adapter.MoviesAdapter;
 import ir.imandroid.moviesapp.api.model.GetMovies;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -30,54 +36,27 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
-    @BindView(R.id.img_poster)
-    ImageView img_poster;
-    @BindView(R.id.lyt_movies)
-    RelativeLayout lyt_movies;
-    @BindView(R.id.txt_id)
-    TextView txt_id;
-    @BindView(R.id.txt_title)
-    TextView txt_title;
-    @BindView(R.id.txt_year)
-    TextView txt_year;
-    @BindView(R.id.txt_country)
-    TextView txt_country;
-    @BindView(R.id.txt_imdb_rating)
-    TextView txt_imdb_rating;
-    @BindView(R.id.txt_genres)
-    TextView txt_genres;
-
+    @BindView(R.id.recycler_movies)
+    RecyclerView recycler_movies;
+    List<GetMovies.Movie> movies;
+    MoviesAdapter moviesAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
+        movies = new ArrayList<>();
+        moviesAdapter = new MoviesAdapter(this,movies);
+        recycler_movies.setLayoutManager(new GridLayoutManager(this,1, LinearLayoutManager.VERTICAL, false));
+        recycler_movies.setAdapter(moviesAdapter);
 
         Call<GetMovies> req = G.service.getMovies();
         req.enqueue(new Callback<GetMovies>() {
             @Override
             public void onResponse(Call<GetMovies> call, Response<GetMovies> response) {
                 GetMovies getMovies = response.body();
-                for (GetMovies.Movie movie :getMovies.getMovies() ){
-                    TextView textView = new TextView(MainActivity.this);
-                    ImageView imageView = new ImageView(MainActivity.this);
-
-                    Picasso.with(MainActivity.this).load(movie.getPoster()).into(((ImageView) findViewById(R.id.img_poster)));
-                    txt_id.setText(String.valueOf(movie.getId()));
-                    txt_title.setText(movie.getTitle());
-                    txt_year.setText(movie.getYear());
-                    txt_country.setText(movie.getCountry());
-                    txt_imdb_rating.setText(movie.getImdbRating());
-                    for (int i=0; i<movie.getGenres().size(); i++) {
-                        if (movie.getGenres().size()>1){
-                            txt_genres.setText(movie.getGenres()+",");
-                        }else {
-                            txt_genres.setText(movie.getGenres()+"");
-                        }
-                    }
-
-                }
+                movies.addAll(getMovies.getMovies());
+                moviesAdapter.notifyDataSetChanged();
             }
 
             @Override
