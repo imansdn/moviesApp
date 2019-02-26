@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.balysv.materialripple.MaterialRippleLayout;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
@@ -81,6 +82,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
         TextView txt_imdb_rating;
         @BindView(R.id.txt_genres)
         TextView txt_genres;
+        @BindView(R.id.recy_item_ripple)
+        MaterialRippleLayout recy_item_ripple;
 
 
 
@@ -92,17 +95,23 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
 
 
 
-
-
-
-
-            view.setOnClickListener(new View.OnClickListener() {
+            recy_item_ripple.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View view) {
 
 
                 }
             });
+
+
+
+//            view.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//
+//
+//                }
+//            });
 
 
 

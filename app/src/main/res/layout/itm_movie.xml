@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,8 +7,14 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="@dimen/corner_radius_5"
     app:cardElevation="@dimen/eleveation_5"
-    android:layout_margin="@dimen/margin_5"
-    android:padding="@dimen/padding_10">
+    android:padding="@dimen/padding_10"
+    android:layout_margin="@dimen/margin_5">
+
+    <com.balysv.materialripple.MaterialRippleLayout
+        android:id="@+id/recy_item_ripple"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RelativeLayout
         android:id="@+id/lyt_movies"
@@ -98,5 +105,7 @@
             android:textStyle="bold" />
 
     </RelativeLayout>
+
+    </com.balysv.materialripple.MaterialRippleLayout>
 
 </android.support.v7.widget.CardView>
