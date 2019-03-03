@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -69,7 +70,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
         @BindView(R.id.img_poster)
         ImageView img_poster;
         @BindView(R.id.lyt_movies)
-        RelativeLayout lyt_movies;
+        ConstraintLayout lyt_movies;
         @BindView(R.id.txt_id)
         TextView txt_id;
         @BindView(R.id.txt_title)
@@ -93,7 +94,9 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
             this.view=itemView;
 
 
-
+            txt_title.setSelected(true);
+            txt_country.setSelected(true);
+            txt_genres.setSelected(true);
 
             recy_item_ripple.setOnClickListener(new View.OnClickListener() {
                 @Override
