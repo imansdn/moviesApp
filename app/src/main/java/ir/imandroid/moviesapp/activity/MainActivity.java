@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         slideInRightAnimationAdapter.setFirstOnly(false);
         recycler_movies.setAdapter(slideInRightAnimationAdapter);
 
+        //Todo get all the pages of movies - search Endless Scrolling and RecyclerView
         Call<GetMovies> req = G.service.getMovies();
         req.enqueue(new Callback<GetMovies>() {
             @Override
