@@ -8,13 +8,14 @@ import retrofit2.http.Query;
 
 public interface Service {
 
-
-
     @GET("api/v1/movies")
     Call<GetMovies> getMovies(@Query("page") String page);
 
     @GET("api/v1/movies")
     Call<GetMovies> getMovies();
+
+    @GET("api/v1/movies")
+    Call<GetMovies> searchMovies(@Query("q") String name, @Query("page") String page);
 
 
 }

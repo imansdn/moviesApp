@@ -43,14 +43,18 @@ public class MainActivity extends AppCompatActivity {
     List<GetMovies.Movie> movies;
     MoviesAdapter moviesAdapter;
     SlideInRightAnimationAdapter slideInRightAnimationAdapter;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
         movies = new ArrayList<>();
         moviesAdapter = new MoviesAdapter(this,movies);
         recycler_movies.setLayoutManager(new GridLayoutManager(this,1, LinearLayoutManager.VERTICAL, false));
+
         AlphaInAnimationAdapter alphaInAnimationAdapter = new AlphaInAnimationAdapter(moviesAdapter);
         slideInRightAnimationAdapter = new SlideInRightAnimationAdapter(alphaInAnimationAdapter);
         slideInRightAnimationAdapter.setDuration(1000);
@@ -64,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
                 GetMovies getMovies = response.body();
                 movies.addAll(getMovies.getMovies());
                 slideInRightAnimationAdapter.notifyDataSetChanged();
+
+
+
             }
 
             @Override
