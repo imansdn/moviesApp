@@ -8,4 +8,7 @@
     <string name="txt_genres">Genres</string>
     <string name="todo">Movie poster</string>
     <string name="edt_search_movie">جستجوی فیلم</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
