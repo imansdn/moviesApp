@@ -1,4 +1,4 @@
-package ir.imandroid.moviesapp.activity;
+package ir.imandroid.moviesapp.fragmnet;
 
 import android.content.Context;
 import android.net.Uri;
@@ -63,6 +63,8 @@ public class MainPageFragment extends Fragment {
         slideInRightAnimationAdapter.setDuration(1000);
         slideInRightAnimationAdapter.setFirstOnly(false);
         recycler_movies.setAdapter(slideInRightAnimationAdapter);
+
+        //Todo get all the pages of movies - search Endless Scrolling and RecyclerView
 
         Call<GetMovies> req = G.service.getMovies();
         req.enqueue(new Callback<GetMovies>() {
