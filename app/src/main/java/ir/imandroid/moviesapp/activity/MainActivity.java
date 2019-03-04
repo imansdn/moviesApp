@@ -9,6 +9,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ir.imandroid.moviesapp.R;
 import ir.imandroid.moviesapp.adapter.ViewPagerAdapter;
+import ir.imandroid.moviesapp.fragmnet.MainPageFragment;
 
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.vp)
