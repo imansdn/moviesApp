@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +55,15 @@ public class MainPageFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_main_page, container, false);
         recycler_movies = view.findViewById(R.id.recycler_movies);
+
+        //testing:
+//        final EditText edt_search = view.findViewById(R.id.edt_search);
+//        edt_search.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                edt_search.setCursorVisible(true);
+//            }
+//        });
 
         movies = new ArrayList<>();
         moviesAdapter = new MoviesAdapter((AppCompatActivity) getActivity(),movies);

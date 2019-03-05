@@ -1,4 +1,4 @@
-package ir.imandroid.moviesapp;
+package ir.imandroid.moviesapp.fragmnet;
 
 import android.content.Context;
 import android.net.Uri;
@@ -7,6 +7,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import ir.imandroid.moviesapp.R;
 
 
 /**
@@ -57,31 +61,28 @@ public class SearchFragment extends Fragment {
         if ( getArguments() != null ) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+            Toast.makeText(getActivity(), "onCreate", Toast.LENGTH_LONG).show();
         }
     }
 
+    View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false);
+
+        view = inflater.inflate(R.layout.fragment_search, container, false);
+
+        Toast.makeText(getActivity(), "onCreateView", Toast.LENGTH_LONG).show();
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if ( mListener != null ) {
             mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if ( context instanceof OnFragmentInteractionListener ) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+            Toast.makeText(getActivity(), "onButtonPressed", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -89,6 +90,7 @@ public class SearchFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        Toast.makeText(getActivity(), "onDetach", Toast.LENGTH_LONG).show();
     }
 
     /**

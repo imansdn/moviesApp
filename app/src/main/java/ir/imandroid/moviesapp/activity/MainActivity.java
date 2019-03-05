@@ -10,6 +10,7 @@ import butterknife.ButterKnife;
 import ir.imandroid.moviesapp.R;
 import ir.imandroid.moviesapp.adapter.ViewPagerAdapter;
 import ir.imandroid.moviesapp.fragmnet.MainPageFragment;
+import ir.imandroid.moviesapp.fragmnet.SearchFragment;
 
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.vp)
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragments(new MainPageFragment(), "Home");
+        viewPagerAdapter.addFragments(new SearchFragment(), "Search");
 
         vp.setAdapter(viewPagerAdapter);
         tb.setupWithViewPager(vp);
