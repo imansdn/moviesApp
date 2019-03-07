@@ -1,22 +1,33 @@
 package ir.imandroid.moviesapp.fragmnet;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import ir.imandroid.moviesapp.G;
 import ir.imandroid.moviesapp.R;
 import ir.imandroid.moviesapp.adapter.MoviesAdapter;
 import ir.imandroid.moviesapp.api.model.GetMovies;
+import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.adapters.SlideInRightAnimationAdapter;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.http.GET;
 
 
 /**
@@ -67,11 +78,19 @@ public class SearchFragment extends Fragment {
         if ( getArguments() != null ) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-            Toast.makeText(getActivity(), "onCreate", Toast.LENGTH_LONG).show();
         }
     }
 
     View view;
+    RecyclerView recycle_search;
+    List<GetMovies.Movie> movies;
+    List<GetMovies.Movie> moviesFilter;
+    List<GetMovies.Movie> moviesDefaultList;
+    MoviesAdapter moviesAdapter;
+    SlideInRightAnimationAdapter slideInRightAnimationAdapter;
+    EditText edt_search;
+    GetMovies movieResoponse;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -79,7 +98,77 @@ public class SearchFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_search, container, false);
 
-        Toast.makeText(getActivity(), "onCreateView", Toast.LENGTH_LONG).show();
+        recycle_search = view.findViewById(R.id.recycle_search);
+        edt_search = view.findViewById(R.id.edt_search);
+
+        movies = new ArrayList<>();
+        moviesDefaultList = new ArrayList<>();
+
+        moviesAdapter = new MoviesAdapter((AppCompatActivity) getActivity(),moviesDefaultList);
+        recycle_search.setLayoutManager(new LinearLayoutManager(getContext()));
+        AlphaInAnimationAdapter alphaInAnimationAdapter = new AlphaInAnimationAdapter(moviesAdapter);
+        slideInRightAnimationAdapter = new SlideInRightAnimationAdapter(alphaInAnimationAdapter);
+        slideInRightAnimationAdapter.setDuration(1000);
+        slideInRightAnimationAdapter.setFirstOnly(false);
+        recycle_search.setAdapter(slideInRightAnimationAdapter);
+
+        Call<GetMovies> req = G.service.searchMovies();
+        req.enqueue(new Callback<GetMovies>() {
+            @Override
+            public void onResponse(Call<GetMovies> call, Response<GetMovies> response) {
+                movieResoponse = response.body();
+
+                movies.addAll(movieResoponse.getMovies());
+
+                moviesDefaultList.clear();
+                moviesDefaultList.addAll(movies);
+                slideInRightAnimationAdapter.notifyDataSetChanged();
+
+                edt_search.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+
+                        moviesFilter = new ArrayList<>();
+
+                        for (int j = 0; j < movies.size(); j++)
+                        {
+
+                            if (movies.get(j).getTitle().trim().contains(editable.toString()))
+                            {
+
+                                moviesFilter.add(movies.get(j));
+//
+                            }else
+                            {
+                                Toast.makeText(getActivity(), "not exist!", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+
+                        moviesDefaultList.clear();
+                        moviesDefaultList.addAll(moviesFilter);
+                        slideInRightAnimationAdapter.notifyDataSetChanged();
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onFailure(Call<GetMovies> call, Throwable t) {
+
+            }
+        });
 
         return view;
     }
