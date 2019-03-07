@@ -17,5 +17,7 @@ public interface Service {
     @GET("api/v1/movies")
     Call<GetMovies> searchMovies(@Query("q") String name, @Query("page") String page);
 
+    @GET("api/v1/movies")
+    Call<GetMovies> searchMovies();
 
 }
