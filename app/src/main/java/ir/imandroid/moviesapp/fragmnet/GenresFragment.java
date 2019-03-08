@@ -4,11 +4,27 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import ir.imandroid.moviesapp.G;
 import ir.imandroid.moviesapp.R;
+import ir.imandroid.moviesapp.adapter.MoviesAdapter;
+import ir.imandroid.moviesapp.api.model.GetMovies;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -62,12 +78,32 @@ public class GenresFragment extends Fragment {
     }
 
     View view;
+    TextView txt_genres;
+    GetMovies movieResoponse;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_genres, container, false);
 
+        txt_genres = view.findViewById(R.id.txt_genres);
+
+        Call<GetMovies> req = G.service.searchMovies();
+        req.enqueue(new Callback<GetMovies>() {
+            @Override
+            public void onResponse(Call<GetMovies> call, Response<GetMovies> response) {
+                movieResoponse = response.body();
+                String s = "";
+                for (int i = 0; i < movieResoponse.getMovies().size(); i++)
+                {
+                    s = s + movieResoponse.getMovies().get(i).getGenres().toString()+"\n";
+                }
+                txt_genres.setText(s);
+            }
+
+            @Override
+            public void onFailure(Call<GetMovies> call, Throwable t) { }
+        });
 
 
         return view;
@@ -80,16 +116,6 @@ public class GenresFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if ( context instanceof OnFragmentInteractionListener ) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
 
     @Override
     public void onDetach() {
