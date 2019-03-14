@@ -31,8 +31,10 @@ import butterknife.ButterKnife;
 
 import ir.imandroid.moviesapp.R;
 import ir.imandroid.moviesapp.activity.MainActivity;
+import ir.imandroid.moviesapp.activity.MoreInfoActivity;
 import ir.imandroid.moviesapp.api.Service;
 import ir.imandroid.moviesapp.api.model.GetMovies;
+import ir.imandroid.moviesapp.fragmnet.GenresFragment;
 import ir.imandroid.moviesapp.util.Constant;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -102,6 +104,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
                 @Override
                 public void onClick(View view) {
 
+                    Intent intent = new Intent(context, MoreInfoActivity.class);
+                    context.startActivity(intent);
 
                 }
             });
