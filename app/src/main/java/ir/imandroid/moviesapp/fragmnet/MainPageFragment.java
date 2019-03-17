@@ -13,6 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.gson.JsonObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +28,11 @@ import butterknife.ButterKnife;
 import ir.imandroid.moviesapp.G;
 import ir.imandroid.moviesapp.R;
 import ir.imandroid.moviesapp.adapter.MoviesAdapter;
+import ir.imandroid.moviesapp.api.model.AddMovie;
 import ir.imandroid.moviesapp.api.model.GetMovies;
 import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.adapters.SlideInRightAnimationAdapter;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -93,7 +101,38 @@ public class MainPageFragment extends Fragment {
             }
         });
 
+
+        addMovieReq("HezarPA","0","Iran","1397");
         return view;
+
+    }
+    void addMovieReq(String title,String imdb,String country, String year){
+        JsonObject jsonObject =  new JsonObject();
+        jsonObject.addProperty("title",title);
+        jsonObject.addProperty("imdb_id",imdb);
+        jsonObject.addProperty("country",country);
+        jsonObject.addProperty("year",year);
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),jsonObject.toString());
+
+
+            Call<AddMovie> req = G.service.addMovie(body);
+
+            req.enqueue(new Callback<AddMovie>() {
+                @Override
+                public void onResponse(Call<AddMovie> call, Response<AddMovie> response) {
+                    AddMovie addMovie = response.body();
+                    if (addMovie != null) {
+                        Toast.makeText(getActivity(), addMovie.getId()+"", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<AddMovie> call, Throwable t) {
+
+                }
+            });
+
 
     }
 
