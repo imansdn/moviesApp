@@ -42,7 +42,8 @@ import retrofit2.Response;
  * create an instance of this fragment.
  */
 public class MainPageFragment extends Fragment {
-
+    //Todo get all the pages of movies - search Endless Scrolling and RecyclerView
+    //TODO open a dialog to add a movie after click on fab Button
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,7 +89,6 @@ public class MainPageFragment extends Fragment {
         recycler_movies.setAdapter(slideInRightAnimationAdapter);
 
 
-        //Todo get all the pages of movies - search Endless Scrolling and RecyclerView
 
         Call<GetMovies> req = G.service.getMovies();
         req.enqueue(new Callback<GetMovies>() {
