@@ -1,30 +1,27 @@
 package ir.imandroid.moviesapp.fragmnet;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 import ir.imandroid.moviesapp.G;
 import ir.imandroid.moviesapp.R;
 import ir.imandroid.moviesapp.adapter.MoviesAdapter;
@@ -32,6 +29,7 @@ import ir.imandroid.moviesapp.api.model.AddMovie;
 import ir.imandroid.moviesapp.api.model.GetMovies;
 import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.adapters.SlideInRightAnimationAdapter;
+import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,25 +42,37 @@ import retrofit2.Response;
  * create an instance of this fragment.
  */
 public class MainPageFragment extends Fragment {
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        movies = new ArrayList<>();
+        moviesAdapter = new MoviesAdapter((AppCompatActivity) getActivity(), movies);
+        AlphaInAnimationAdapter alphaInAnimationAdapter = new AlphaInAnimationAdapter(moviesAdapter);
+        slideInRightAnimationAdapter = new SlideInRightAnimationAdapter(alphaInAnimationAdapter);
+        slideInRightAnimationAdapter.setDuration(1000);
+        slideInRightAnimationAdapter.setFirstOnly(true);
+
     }
 
     View view;
-//    @BindView(R.id.recycler_movies)
+    @BindView(R.id.recycler_movies)
     RecyclerView recycler_movies;
+    @BindView(R.id.fab_add)
+
+    FloatingActionButton fabAdd;
+    Unbinder unbinder;
     List<GetMovies.Movie> movies;
     MoviesAdapter moviesAdapter;
     SlideInRightAnimationAdapter slideInRightAnimationAdapter;
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        ButterKnife.bind(getActivity());
 
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_main_page, container, false);
-        recycler_movies = view.findViewById(R.id.recycler_movies);
+        unbinder = ButterKnife.bind(this, view);
 
         //testing:
 //        final EditText edt_search = view.findViewById(R.id.edt_search);
@@ -73,14 +83,10 @@ public class MainPageFragment extends Fragment {
 //            }
 //        });
 
-        movies = new ArrayList<>();
-        moviesAdapter = new MoviesAdapter((AppCompatActivity) getActivity(),movies);
         recycler_movies.setLayoutManager(new LinearLayoutManager(getContext()));
-        AlphaInAnimationAdapter alphaInAnimationAdapter = new AlphaInAnimationAdapter(moviesAdapter);
-        slideInRightAnimationAdapter = new SlideInRightAnimationAdapter(alphaInAnimationAdapter);
-        slideInRightAnimationAdapter.setDuration(1000);
-        slideInRightAnimationAdapter.setFirstOnly(false);
+
         recycler_movies.setAdapter(slideInRightAnimationAdapter);
+
 
         //Todo get all the pages of movies - search Endless Scrolling and RecyclerView
 
@@ -88,8 +94,11 @@ public class MainPageFragment extends Fragment {
         req.enqueue(new Callback<GetMovies>() {
             @Override
             public void onResponse(Call<GetMovies> call, Response<GetMovies> response) {
+                movies.clear();
                 GetMovies getMovies = response.body();
-                movies.addAll(getMovies.getMovies());
+                if (getMovies != null) {
+                    movies.addAll(getMovies.getMovies());
+                }
                 slideInRightAnimationAdapter.notifyDataSetChanged();
 
 
@@ -102,38 +111,49 @@ public class MainPageFragment extends Fragment {
         });
 
 
-        addMovieReq("HezarPA","0","Iran","1397");
         return view;
 
     }
-    void addMovieReq(String title,String imdb,String country, String year){
-        JsonObject jsonObject =  new JsonObject();
-        jsonObject.addProperty("title",title);
-        jsonObject.addProperty("imdb_id",imdb);
-        jsonObject.addProperty("country",country);
-        jsonObject.addProperty("year",year);
-        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),jsonObject.toString());
+
+    void addMovieReq(String title, String imdb, String country, String year) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("title", title);
+        jsonObject.addProperty("imdb_id", imdb);
+        jsonObject.addProperty("country", country);
+        jsonObject.addProperty("year", year);
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
 
 
-            Call<AddMovie> req = G.service.addMovie(body);
+        Call<AddMovie> req = G.service.addMovie(body);
 
-            req.enqueue(new Callback<AddMovie>() {
-                @Override
-                public void onResponse(Call<AddMovie> call, Response<AddMovie> response) {
-                    AddMovie addMovie = response.body();
-                    if (addMovie != null) {
-                        Toast.makeText(getActivity(), addMovie.getId()+"", Toast.LENGTH_SHORT).show();
-                    }
-
+        req.enqueue(new Callback<AddMovie>() {
+            @Override
+            public void onResponse(Call<AddMovie> call, Response<AddMovie> response) {
+                AddMovie addMovie = response.body();
+                if (addMovie != null) {
+                    Toast.makeText(getActivity(), addMovie.getId() + "", Toast.LENGTH_SHORT).show();
                 }
 
-                @Override
-                public void onFailure(Call<AddMovie> call, Throwable t) {
+            }
 
-                }
-            });
+            @Override
+            public void onFailure(Call<AddMovie> call, Throwable t) {
+
+            }
+        });
 
 
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @OnClick(R.id.fab_add)
+    public void onViewClicked() {
+        addMovieReq("HezarPA", "0", "Iran", "1397");
+
+    }
 }
