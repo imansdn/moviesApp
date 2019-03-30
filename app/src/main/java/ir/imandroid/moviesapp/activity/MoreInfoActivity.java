@@ -40,6 +40,7 @@ public class MoreInfoActivity extends AppCompatActivity {
                 Bundle bundle = getIntent().getExtras();
                 if ( bundle!=null ) {
                     int position = bundle.getInt("position");
+                    Picasso.with(MoreInfoActivity.this).load(movieResponse.getMovies().get(position).getPoster()).into((img_movie_poster));
                 }
 
             }
