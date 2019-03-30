@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
@@ -24,6 +25,22 @@ public class MoreInfoActivity extends AppCompatActivity {
 
     @BindView(R.id.img_movie_poster)
     ImageView img_movie_poster;
+    @BindView(R.id.txt_title_mia)
+    TextView txt_title_mia;
+    @BindView(R.id.txt_country_mia)
+    TextView txt_country_mia;
+    @BindView(R.id.txt_genres_mia)
+    TextView txt_genres_mia;
+    @BindView(R.id.txt_imdb_rating_mia)
+    TextView txt_imdb_rating_mia;
+    @BindView(R.id.txt_year_mia)
+    TextView txt_year_mia;
+    @BindView(R.id.img_poster_1)
+    ImageView img_poster_1;
+    @BindView(R.id.img_poster_2)
+    ImageView img_poster_2;
+    @BindView(R.id.img_poster_3)
+    ImageView img_poster_3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +57,21 @@ public class MoreInfoActivity extends AppCompatActivity {
                 Bundle bundle = getIntent().getExtras();
                 if ( bundle!=null ) {
                     int position = bundle.getInt("position");
-                    Picasso.with(MoreInfoActivity.this).load(movieResponse.getMovies().get(position).getPoster()).into((img_movie_poster));
+
+                    GetMovies.Movie data = movieResponse.getMovies().get(position);
+
+                    Picasso.with(MoreInfoActivity.this).load(data.getPoster()).into((img_movie_poster));
+
+                    txt_title_mia.setText(data.getTitle());
+                    txt_year_mia.setText(data.getYear());
+                    txt_country_mia.setText(data.getCountry());
+                    txt_imdb_rating_mia.setText(data.getImdbRating());
+                    StringBuilder genres = new StringBuilder();
+                    for (String genre : data.getGenres()) {
+                        genres.append(genre+", ");
+                    }
+                    txt_genres_mia.setText(genres.substring(0,genres.length()));
+
                 }
 
             }
