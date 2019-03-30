@@ -105,6 +105,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
                 public void onClick(View view) {
 
                     Intent intent = new Intent(context, MoreInfoActivity.class);
+                    intent.putExtra("position", getPosition());
                     context.startActivity(intent);
 
                 }
