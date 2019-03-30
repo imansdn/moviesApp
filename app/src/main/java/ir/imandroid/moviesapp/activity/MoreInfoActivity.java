@@ -24,6 +24,7 @@ public class MoreInfoActivity extends AppCompatActivity {
 
     @BindView(R.id.img_movie_poster)
     ImageView img_movie_poster;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +36,11 @@ public class MoreInfoActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<GetMovies> call, Response<GetMovies> response) {
                 GetMovies movieResponse = response.body();
+
+                Bundle bundle = getIntent().getExtras();
+                if ( bundle!=null ) {
+                    int position = bundle.getInt("position");
+                }
 
             }
 
