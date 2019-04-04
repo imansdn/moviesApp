@@ -4,12 +4,17 @@ import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -71,6 +76,16 @@ public class MoreInfoActivity extends AppCompatActivity {
                         genres.append(genre+", ");
                     }
                     txt_genres_mia.setText(genres.substring(0,genres.length()));
+
+                    Picasso.Builder picassoBuilder = new Picasso.Builder(MoreInfoActivity.this);
+                    Picasso picasso = picassoBuilder.build();
+
+                        picasso.load(data.getImages().get(0)).into(img_poster_1);
+                        picasso.load(data.getImages().get(1)).into(img_poster_2);
+                        picasso.load(data.getImages().get(2)).into(img_poster_3);
+
+                    Log.e("movieUrls", data.getImages().toString());
+
 
                 }
 
