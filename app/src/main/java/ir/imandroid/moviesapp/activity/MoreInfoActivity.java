@@ -84,7 +84,6 @@ public class MoreInfoActivity extends AppCompatActivity {
                         picasso.load(data.getImages().get(1)).into(img_poster_2);
                         picasso.load(data.getImages().get(2)).into(img_poster_3);
 
-                    Log.e("movieUrls", data.getImages().toString());
 
 
                 }
