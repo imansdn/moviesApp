@@ -1,5 +1,6 @@
 package ir.imandroid.moviesapp.activity;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -9,16 +10,18 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ir.imandroid.moviesapp.R;
 import ir.imandroid.moviesapp.adapter.ViewPagerAdapter;
+import ir.imandroid.moviesapp.fragmnet.BaseFragment;
 import ir.imandroid.moviesapp.fragmnet.GenresFragment;
 import ir.imandroid.moviesapp.fragmnet.MainPageFragment;
 import ir.imandroid.moviesapp.fragmnet.SearchFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements BaseFragment.BackHandlerInterface {
     @BindView(R.id.vp)
     ViewPager vp;
     @BindView(R.id.tb)
     TabLayout tb;
     ViewPagerAdapter viewPagerAdapter;
+    private BaseFragment selectedFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,23 @@ public class MainActivity extends AppCompatActivity {
 
         vp.setAdapter(viewPagerAdapter);
         tb.setupWithViewPager(vp);
+
+    }
+
+
+    @Override
+    public void onBackPressed()
+    {
+        if(selectedFragment == null || !selectedFragment.onBackPressed()) {
+            // Selected fragment did not consume the back press event.
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void setSelectedFragment(BaseFragment selectedFragment) {
+
+        this.selectedFragment = selectedFragment;
 
     }
 }
