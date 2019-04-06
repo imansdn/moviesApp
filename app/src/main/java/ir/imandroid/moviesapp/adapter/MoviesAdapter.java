@@ -3,9 +3,11 @@ package ir.imandroid.moviesapp.adapter;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -24,25 +26,15 @@ import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import ir.imandroid.moviesapp.R;
-import ir.imandroid.moviesapp.activity.MainActivity;
-import ir.imandroid.moviesapp.activity.MoreInfoActivity;
 import ir.imandroid.moviesapp.api.Service;
 import ir.imandroid.moviesapp.api.model.GetMovies;
-import ir.imandroid.moviesapp.fragmnet.GenresFragment;
-import ir.imandroid.moviesapp.util.Constant;
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import ir.imandroid.moviesapp.fragmnet.MoreInfoFragment;
+
 
 
 
@@ -103,10 +95,17 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
             recy_item_ripple.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+//
+//                    Intent intent = new Intent(context, MoreInfoActivity.class);
+//                    intent.putExtra("position", getAdapterPosition());
+//                    context.startActivity(intent);
 
-                    Intent intent = new Intent(context, MoreInfoActivity.class);
-                    intent.putExtra("position", getPosition());
-                    context.startActivity(intent);
+                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                    Fragment moreInfoFragment = new MoreInfoFragment();
+                    Bundle mBundle = new Bundle();
+                    mBundle.putString("position",getAdapterPosition()+"" );
+                    moreInfoFragment.setArguments(mBundle);
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.lyt_container, moreInfoFragment).addToBackStack(null).commit();
 
                 }
             });
@@ -150,6 +149,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
     public int getItemCount() {
         return movies.size();
     }
+
 
 
 
