@@ -34,7 +34,7 @@ import retrofit2.Response;
  * Use the {@link GenresFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GenresFragment extends Fragment {
+public class GenresFragment extends BaseFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -66,6 +66,16 @@ public class GenresFragment extends Fragment {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public String getTagText() {
+        return null;
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        return false;
     }
 
     @Override

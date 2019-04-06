@@ -41,9 +41,18 @@ import retrofit2.Response;
  * to handle interaction events.
  * create an instance of this fragment.
  */
-public class MainPageFragment extends Fragment {
+public class MainPageFragment extends BaseFragment {
     //Todo get all the pages of movies - search Endless Scrolling and RecyclerView
-    //TODO open a dialog to add a movie after click on fab Button
+
+    @Override
+    public String getTagText() {
+        return null;
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        return false;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -153,6 +162,7 @@ public class MainPageFragment extends Fragment {
 
     @OnClick(R.id.fab_add)
     public void onViewClicked() {
+        //TODO open a dialog to add a movie after click on fab Button
         addMovieReq("HezarPA", "0", "Iran", "1397");
 
     }
